@@ -1,7 +1,7 @@
 # Личный проект «Кексобукинг» [![Build status][travis-image]][travis-url]
 
 * Студент: [Александр Масленников](https://up.htmlacademy.ru/javascript/20/user/1337837).
-* Наставник: `Неизвестно`.
+* Наставник: [Иван Авдеев](https://up.htmlacademy.ru/javascript/20/user/884619).
 
 ---
 
