@@ -96,9 +96,9 @@ var getRandomHouse = function () {
   };
 
   return {
-    author,
-    offer,
-    location
+    author: author,
+    offer: offer,
+    location: location
   };
 };
 
