@@ -149,13 +149,12 @@ var getCheckType = function (type) {
     return 'Дворец';
   }
   if (type === 'Flat') {
-    return 'Квартира'
+    return 'Квартира';
   }
   if (type === 'House') {
-    return 'Дом'
-  }
-  if (type === 'Bungalo') {
-    return 'Бунгало'
+    return 'Дом';
+  } else {
+    return 'Бунгало';
   }
 };
 
