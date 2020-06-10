@@ -45,13 +45,13 @@ var getRandomElement = function (arr) {
 
 // Функция для перемешивания массива.
 var shuffleArray = function (arr) {
-  var initIndex;
+  var tempValue;
   var newArr = [];
   for (var i = arr.length - 1; i >= 0; i--) {
     var randomIndex = Math.floor(Math.random() * (i + 1));
-    initIndex = arr[i];
+    tempValue = arr[i];
     arr[i] = arr[randomIndex];
-    arr[randomIndex] = initIndex;
+    arr[randomIndex] = tempValue;
     newArr.push(arr[i]);
   }
   return newArr;
@@ -96,9 +96,9 @@ var getRandomHouse = function () {
   };
 
   return {
-    author: author,
-    offer: offer,
-    location: location
+    author,
+    offer,
+    location
   };
 };
 
