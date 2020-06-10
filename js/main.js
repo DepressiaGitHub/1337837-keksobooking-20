@@ -1,8 +1,33 @@
 'use strict';
 
-//  Находим блок map и показываем его.
-var siteMap = document.querySelector('.map');
-siteMap.classList.remove('map--faded');
+//  Объявляем переменные.
+var randomOffer = [];
+var MAP_WIDTH = document.querySelector('.map__pins').offsetWidth;
+var MAP_MIN_HEIGHT = 130;
+var MAP_MAX_HEIGTH = 630;
+var AVATAR_LIST = [];
+var TITLE_LIST = [
+  'Отличное жильё!',
+  'Недорого и без тараканов!',
+  'Дом, который сдаёт Джек!',
+  'Нам не страшен серый Волк!'
+];
+var PRICE = {min: 5000, max: 150000};
+var TYPE_LIST = ['Palace', 'Flat', 'House', 'Bungalo'];
+var ROOMS = {min: 1, max: 5};
+var GUESTS = {min: 1, max: 10};
+var CHECKIN_LIST = ['12:00', '13:00', '14:00'];
+var CHECKOUT_LIST = ['12:00', '13:00', '14:00'];
+var FEATURES_LIST = ['wifi', 'dishwasher', 'parking', 'washer', 'elevator', 'conditioner'];
+var DESCRIPTION = 'Любой каприз за ваши шекели!';
+var PHOTOS_LIST = [
+  'http://o0.github.io/assets/images/tokyo/hotel1.jpg',
+  'http://o0.github.io/assets/images/tokyo/hotel2.jpg',
+  'http://o0.github.io/assets/images/tokyo/hotel3.jpg'
+];
+var MARKER_WIDTH = 50;
+var MARKER_HEIGTH = 70;
+var TOTAL_AMOUNT = 8;
 
 //  Функция для случайных чисел от min до max включительно.
 var getRandom = function (start, end) {
@@ -18,53 +43,29 @@ var getRandomElement = function (arr) {
   return arr[rand];
 };
 
-// Мешаем массив.
+// Функция для перемешивания массива.
 var shuffleArray = function (arr) {
-  var initValue;
+  var initIndex;
   var newArr = [];
   for (var i = arr.length - 1; i >= 0; i--) {
-    var randomValue = Math.floor(Math.random() * (i + 1));
-    initValue = arr[i];
-    arr[i] = arr[randomValue];
-    arr[randomValue] = initValue;
+    var randomIndex = Math.floor(Math.random() * (i + 1));
+    initIndex = arr[i];
+    arr[i] = arr[randomIndex];
+    arr[randomIndex] = initIndex;
     newArr.push(arr[i]);
   }
   return newArr;
 };
 
-//  Создаём массив со случайным кол-вом элементов из данного массива.
-var randomArray = function (arr) {
+//  Создаёт массив со случайным кол-вом элементов из данного массива.
+var getRandomArray = function (arr) {
   var newArr = shuffleArray(arr);
-  var shuffleArr = newArr.slice(0, getRandom(1, newArr.length));
-  return shuffleArr;
+
+  return newArr.slice(0, getRandom(1, newArr.length));
 };
 
-//  Объявляем переменные.
-var randomOffer = [];
-var MAP_WIDTH = document.querySelector('.map__pins').offsetWidth;
-var MAP_MIN_HEIGHT = 130;
-var MAP_MAX_HEIGTH = 630;
-var AVATAR_LIST = [];
-var TITLE_LIST = ['Отличное жильё!', 'Недорого и без тараканов!', 'Дом, который сдаёт Джек!', 'Нам не страшен серый Волк!'];
-var PRICE_LIST = getRandom(5000, 150000);
-var TYPE_LIST = ['Palace', 'Flat', 'House', 'Bungalo'];
-var ROOMS_LIST = getRandom(1, 5);
-var GUESTS_LIST = getRandom(1, 10);
-var CHECKIN_LIST = ['12:00', '13:00', '14:00'];
-var CHECKOUT_LIST = ['12:00', '13:00', '14:00'];
-var FEATURES_LIST = ['wifi', 'dishwasher', 'parking', 'washer', 'elevator', 'conditioner'];
-var DISCRIPTION_LIST = ['Любой каприз за ваши шекели! Есть завтрак, обед и ужин за дополнительную плату. Вид из окна на мимопротекающую реку!'];
-var PHOTOS_LIST = [
-  'http://o0.github.io/assets/images/tokyo/hotel1.jpg',
-  'http://o0.github.io/assets/images/tokyo/hotel2.jpg',
-  'http://o0.github.io/assets/images/tokyo/hotel3.jpg'
-];
-var MARKER_WIDTH = 50;
-var MARKER_HEIGTH = 70;
-var TOTAL_AMOUNT = 8;
-
 //  Цикл для создания списка аватарок.
-for (var i = 0; i < 8; i++) {
+for (var i = 0; i < TOTAL_AMOUNT; i++) {
   AVATAR_LIST[i] = 'img/avatars/user0' + (i + 1) + '.png';
 }
 
@@ -79,15 +80,15 @@ var getRandomHouse = function () {
   var offer = {
     title: getRandomElement(TITLE_LIST),
     address: getRandom(0, MAP_WIDTH) + ', ' + getRandom(MAP_MIN_HEIGHT, MAP_MAX_HEIGTH),
-    price: PRICE_LIST,
-    type: TYPE_LIST[getRandom(0, 3)],
-    rooms: ROOMS_LIST,
-    guests: GUESTS_LIST,
+    price: getRandom(PRICE.min, PRICE.max),
+    type: getRandomElement(TYPE_LIST),
+    rooms: getRandom(ROOMS.min, ROOMS.max),
+    guests: getRandom(GUESTS.min, GUESTS.max),
     checkin: getRandomElement(CHECKIN_LIST),
     checkout: getRandomElement(CHECKOUT_LIST),
-    features: randomArray(shuffleArray(FEATURES_LIST)),
-    description: DISCRIPTION_LIST,
-    photos: randomArray(shuffleArray(PHOTOS_LIST))
+    features: getRandomArray(shuffleArray(FEATURES_LIST)),
+    description: DESCRIPTION,
+    photos: getRandomArray(shuffleArray(PHOTOS_LIST))
   };
   var location = {
     x: getRandom(0, MAP_WIDTH) - (MARKER_WIDTH / 2) + 'px',
@@ -95,13 +96,13 @@ var getRandomHouse = function () {
   };
 
   return {
-    author: author,
-    offer: offer,
-    location: location
+    author,
+    offer,
+    location
   };
 };
 
-//  Цикл для массива случайных объявлений.
+//  Цикл для заполнения массива случайных объявлений.
 for (i = 0; i < TOTAL_AMOUNT; i++) {
   randomOffer[i] = getRandomHouse();
 }
@@ -129,3 +130,7 @@ for (i = 0; i < randomOffer.length; i++) {
 }
 
 pinElement.appendChild(fragment);
+
+//  Находим блок map и показываем его.
+var siteMap = document.querySelector('.map');
+siteMap.classList.remove('map--faded');
