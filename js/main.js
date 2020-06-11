@@ -12,13 +12,13 @@ var TITLE_LIST = [
   'Дом, который сдаёт Джек!',
   'Нам не страшен серый Волк!'
 ];
-var PRICE = {min: 5000, max: 150000};
+var PRICE = {min: 2000, max: 15000};
 var TYPE_LIST = ['Palace', 'Flat', 'House', 'Bungalo'];
 var ROOMS = {min: 1, max: 5};
 var GUESTS = {min: 1, max: 10};
 var CHECKIN_LIST = ['12:00', '13:00', '14:00'];
 var CHECKOUT_LIST = ['12:00', '13:00', '14:00'];
-var FEATURES_LIST = [' wifi', ' dishwasher', ' parking', ' washer', ' elevator', ' conditioner'];
+var FEATURES_LIST = ['wifi', 'dishwasher', 'parking', 'washer', 'elevator', 'conditioner'];
 var DESCRIPTION = 'Любой каприз за ваши шекели!';
 var PHOTOS_LIST = [
   'http://o0.github.io/assets/images/tokyo/hotel1.jpg',
@@ -144,18 +144,32 @@ var cardTemplate = document.querySelector('#card')
   .querySelector('.map__card');
 
 // Функция для проверки типа жилья.
-var getCheckType = function (type) {
-  if (type === 'Palace') {
-    return 'Дворец';
-  }
-  if (type === 'Flat') {
-    return 'Квартира';
-  }
-  if (type === 'House') {
-    return 'Дом';
+var HOUSE_TYPES_MAP = {
+  'Palace': 'Дворец',
+  'Flat': 'Квартира',
+  'House': 'Дом',
+  'Bungalo': 'Бунгало'
+};
+
+var getHouseType = function (type) {
+  return HOUSE_TYPES_MAP[type];
+};
+
+// Функции для правильного склонения "комнаты" и "гости".
+var getTextAboutRooms = function (rooms, guests) {
+  var text = '';
+  if (rooms === 1) {
+    text += rooms + ' комната для ';
   } else {
-    return 'Бунгало';
+    text += rooms + ' комнаты для ';
   }
+  if (guests === 1) {
+    text += guests + ' гостя';
+  } else {
+    text += guests + ' гостей';
+  }
+
+  return text;
 };
 
 // Функция для заполнения карточки с описанием.
@@ -169,10 +183,10 @@ var renderCard = function (data) {
   mapCardElement.querySelector('.popup__title').textContent = data.offer.title;
   mapCardElement.querySelector('.popup__text--address').textContent = data.offer.address;
   mapCardElement.querySelector('.popup__text--price').textContent = data.offer.price + '₽/ночь';
-  mapCardElement.querySelector('.popup__type').textContent = getCheckType(data.offer.type);
-  mapCardElement.querySelector('.popup__text--capacity').textContent = data.offer.rooms + ' комнаты для ' + data.offer.guests;
+  mapCardElement.querySelector('.popup__type').textContent = getHouseType(data.offer.type);
+  mapCardElement.querySelector('.popup__text--capacity').textContent = getTextAboutRooms(data.offer.rooms, data.offer.guests);
   mapCardElement.querySelector('.popup__text--time').textContent = 'Заезд после ' + data.offer.checkin + ', выезд до ' + data.offer.checkout;
-  mapCardElement.querySelector('.popup__features').textContent = data.offer.features;
+  mapCardElement.querySelector('.popup__features').textContent = data.offer.features.join(', ');
   mapCardElement.querySelector('.popup__description').textContent = data.offer.description;
   mapCardElement.querySelector('.popup__avatar').src = data.author.avatar;
 
