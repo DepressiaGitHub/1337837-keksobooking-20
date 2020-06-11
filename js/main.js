@@ -14,7 +14,7 @@ var TITLE_LIST = [
 ];
 var PRICE = {min: 2000, max: 15000};
 var TYPE_LIST = ['Palace', 'Flat', 'House', 'Bungalo'];
-var ROOMS = {min: 1, max: 31};
+var ROOMS = {min: 1, max: 121};
 var GUESTS = {min: 1, max: 10};
 var CHECKIN_LIST = ['12:00', '13:00', '14:00'];
 var CHECKOUT_LIST = ['12:00', '13:00', '14:00'];
@@ -160,7 +160,7 @@ var getTextAboutRooms = function (rooms, guests) {
   var text = '';
   if (rooms === 1 || rooms % 10 === 1 && rooms % 100 !== 11) {
     text += rooms + ' комната для ';
-  } else if (rooms < 5) {
+  } else if (rooms % 10 < 5 && rooms % 10 > 0 && rooms % 100 > 21 || rooms % 10 < 5 && rooms % 100 < 5 && rooms % 10 > 0) {
     text += rooms + ' комнаты для ';
   } else {
     text += rooms + ' комнат для ';
