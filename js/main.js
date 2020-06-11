@@ -14,7 +14,7 @@ var TITLE_LIST = [
 ];
 var PRICE = {min: 2000, max: 15000};
 var TYPE_LIST = ['Palace', 'Flat', 'House', 'Bungalo'];
-var ROOMS = {min: 1, max: 7};
+var ROOMS = {min: 1, max: 31};
 var GUESTS = {min: 1, max: 10};
 var CHECKIN_LIST = ['12:00', '13:00', '14:00'];
 var CHECKOUT_LIST = ['12:00', '13:00', '14:00'];
@@ -158,7 +158,7 @@ var getHouseType = function (type) {
 // Функции для правильного склонения "комнаты" и "гости".
 var getTextAboutRooms = function (rooms, guests) {
   var text = '';
-  if (rooms === 1) {
+  if (rooms === 1 || rooms % 10 === 1 && rooms % 100 !== 11) {
     text += rooms + ' комната для ';
   } else if (rooms < 5) {
     text += rooms + ' комнаты для ';
