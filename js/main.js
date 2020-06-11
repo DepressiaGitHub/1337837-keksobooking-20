@@ -14,7 +14,7 @@ var TITLE_LIST = [
 ];
 var PRICE = {min: 2000, max: 15000};
 var TYPE_LIST = ['Palace', 'Flat', 'House', 'Bungalo'];
-var ROOMS = {min: 1, max: 5};
+var ROOMS = {min: 1, max: 7};
 var GUESTS = {min: 1, max: 10};
 var CHECKIN_LIST = ['12:00', '13:00', '14:00'];
 var CHECKOUT_LIST = ['12:00', '13:00', '14:00'];
@@ -160,13 +160,17 @@ var getTextAboutRooms = function (rooms, guests) {
   var text = '';
   if (rooms === 1) {
     text += rooms + ' комната для ';
-  } else {
+  } else if (rooms < 5) {
     text += rooms + ' комнаты для ';
-  }
-  if (guests === 1) {
-    text += guests + ' гостя';
   } else {
-    text += guests + ' гостей';
+    text += rooms + ' комнат для ';
+  }
+  switch (guests) {
+    case 1:
+      text += guests + ' гостя';
+      break;
+    default:
+      text += guests + ' гостей';
   }
 
   return text;
@@ -190,8 +194,8 @@ var renderCard = function (data) {
   mapCardElement.querySelector('.popup__description').textContent = data.offer.description;
   mapCardElement.querySelector('.popup__avatar').src = data.author.avatar;
 
-  photoElement.src = data.offer.photos[0];
-  if (photosLength > 1) {
+  if (photosLength > 0) {
+    photoElement.src = data.offer.photos[0];
     for (var j = 1; j < photosLength; j++) {
       var photoElementTemplate = photoElement.cloneNode(true);
       photoElementTemplate.src = data.offer.photos[j];
@@ -205,8 +209,7 @@ var renderCard = function (data) {
 var fragmentCard = document.createDocumentFragment();
 
 //  Отрисовываем карточку на карте.
-for (i = 0; i < randomOffer.length; i++) {
-  fragmentCard.appendChild(renderCard(randomOffer[i]));
-}
+fragmentCard.appendChild(renderCard(randomOffer[0]));
+
 
 siteMap.insertBefore(fragmentCard, cardElement);
