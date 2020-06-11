@@ -61,7 +61,7 @@ var shuffleArray = function (arr) {
 var getRandomArray = function (arr) {
   var newArr = shuffleArray(arr);
 
-  return newArr.slice(0, getRandom(1, newArr.length));
+  return newArr.slice(0, getRandom(0, newArr.length));
 };
 
 //  Цикл для создания списка аватарок.
@@ -201,6 +201,8 @@ var renderCard = function (data) {
       photoElementTemplate.src = data.offer.photos[j];
       photoBlock.appendChild(photoElementTemplate);
     }
+  } else {
+    photoElement.style = 'display: none';
   }
 
   return mapCardElement;
