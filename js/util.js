@@ -19,10 +19,10 @@
       var newArr = [];
       for (var i = arr.length - 1; i >= 0; i--) {
         var randomIndex = Math.floor(Math.random() * (i + 1));
-          tempValue = arr[i];
-          arr[i] = arr[randomIndex];
-          arr[randomIndex] = tempValue;
-          newArr.push(arr[i]);
+        tempValue = arr[i];
+        arr[i] = arr[randomIndex];
+        arr[randomIndex] = tempValue;
+        newArr.push(arr[i]);
       }
       return newArr;
     },

@@ -7,7 +7,7 @@
   }
 
   var fragmentCard = document.createDocumentFragment();
-  for (var i = 0; i < window.data.randomOffer.length; i++) {
+  for (i = 0; i < window.data.randomOffer.length; i++) {
     fragmentCard.appendChild(window.card.renderCard(window.data.randomOffer[i]));
   }
 
@@ -17,11 +17,17 @@
   var pinElement = document.querySelector('.map__pins');
   var cardElement = document.querySelector('.map__filters-container');
   var inputAddress = document.querySelector('#address');
+  var mapPinMain = document.querySelector('.map__pin--main');
+
+  var mapPinMainWidth = 65;
+  var mapPinMainHeigth = 84;
+  var mapPinMainPositionX = Math.floor(570 + mapPinMainWidth / 2);
+  var mapPinMainPositionY = Math.floor(375 + mapPinMainHeigth / 2);
 
   siteMap.classList.add('map--faded');
   userForm.classList.add('ad-form--disabled');
 
-  for (var i = 0; i < fieldsetList.length; i++) {
+  for (i = 0; i < fieldsetList.length; i++) {
     fieldsetList[i].setAttribute('disabled', 'disabled');
   }
 
@@ -87,7 +93,7 @@
       });
     };
 
-    for (var i = 0; i < openedCard.length; i++) {
+    for (i = 0; i < openedCard.length; i++) {
       closeCard(buttonCloseCard[i], openedCard[i]);
     }
 

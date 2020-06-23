@@ -1,7 +1,6 @@
 'use strict';
 
 (function () {
-  var cardElement = document.querySelector('.map__filters-container');
   var cardTemplate = document.querySelector('#card')
     .content
     .querySelector('.map__card');
@@ -72,5 +71,5 @@
 
   window.card = {
     renderCard: renderCard
-  }
+  };
 })();

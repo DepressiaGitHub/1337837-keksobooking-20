@@ -1,8 +1,14 @@
 'use strict';
 
 (function () {
+  var MAP_WIDTH = document.querySelector('.map__pins').offsetWidth;
+  var MAP_MIN_HEIGHT = 130;
+  var MAP_MAX_HEIGTH = 630;
+  var MARKER_WIDTH = 50;
+  var MARKER_HEIGTH = 70;
   var randomOffer = [];
   var AVATAR_LIST = [];
+  var TOTAL_AMOUNT = 8;
   var TITLE_LIST = [
     'Отличное жильё!',
     'Недорого и без тараканов!',
@@ -64,5 +70,5 @@
 
   window.data = {
     randomOffer: randomOffer
-  }
+  };
 })();
