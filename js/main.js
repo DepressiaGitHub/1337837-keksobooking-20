@@ -352,9 +352,8 @@ userTimeOut.addEventListener('change', function () {
 });
 
 var userRooms = document.querySelector('#room_number');
-var userGuest = document.querySelector('#capacity');
-// var userRoomsList = userRooms.querySelectorAll('option');
-var userGuestList = userGuest.querySelectorAll('option');
+var userGuests = document.querySelector('#capacity');
+var userGuestsList = userGuests.querySelectorAll('option');
 
 var userRoomsValues = {
   '1': ['1'],
@@ -368,12 +367,12 @@ var availableRooms = function () {
   var userGuestValues = userRoomsValues[userRoomValue];
   var isSelected = false;
 
-  for (var j = 0; j < userGuestList.length; j++) {
-    userGuestList[j].removeAttribute('selected');
+  for (var j = 0; j < userGuestsList.length; j++) {
+    userGuestsList[j].removeAttribute('selected');
   }
 
-  for (j = 0; j < userGuestList.length; j++) {
-    var option = userGuestList[j];
+  for (j = 0; j < userGuestsList.length; j++) {
+    var option = userGuestsList[j];
 
     if (userGuestValues.includes(option.value)) {
       option.removeAttribute('disabled');
