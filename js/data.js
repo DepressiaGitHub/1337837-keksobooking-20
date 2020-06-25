@@ -3,7 +3,7 @@
 (function () {
   var MAP_WIDTH = document.querySelector('.map__pins').offsetWidth;
   var MAP_MIN_HEIGHT = 130;
-  var MAP_MAX_HEIGTH = 630;
+  var MAP_MAX_HEIGHT = 630;
   var MARKER_WIDTH = 50;
   var MARKER_HEIGTH = 70;
   var randomOffer = [];
@@ -41,7 +41,7 @@
     };
     var location = {
       x: window.util.getRandom(0, MAP_WIDTH) - (MARKER_WIDTH / 2) + 'px',
-      y: window.util.getRandom(MAP_MIN_HEIGHT, MAP_MAX_HEIGTH) - (MARKER_HEIGTH) + 'px'
+      y: window.util.getRandom(MAP_MIN_HEIGHT, MAP_MAX_HEIGHT) - (MARKER_HEIGTH) + 'px'
     };
     var offer = {
       title: window.util.getRandomElement(TITLE_LIST),
@@ -69,6 +69,8 @@
   }
 
   window.data = {
-    randomOffer: randomOffer
+    randomOffer: randomOffer,
+    MAP_MIN_HEIGHT: MAP_MIN_HEIGHT,
+    MAP_MAX_HEIGHT: MAP_MAX_HEIGHT
   };
 })();
