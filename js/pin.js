@@ -23,6 +23,11 @@
   var mapPinMainPositionX = Math.floor(570 + mapPinMainWidth / 2);
   var mapPinMainPositionY = Math.floor(375 + mapPinMainHeigth);
 
+  var mapPinMainMaxX = MAP_WIDTH - mapPinMainWidth / 2;
+  var mapPinMainMinX = -mapPinMainWidth / 2;
+  var mapPinMainMaxY = window.data.MAP_MAX_HEIGHT - mapPinMainHeigth;
+  var mapPinMainMinY = window.data.MAP_MIN_HEIGHT - mapPinMainHeigth;
+
   var newPosition = function () {
     mapPinMainPositionX = Math.floor(parseInt(mapPinMain.style.left, 10) + mapPinMainWidth / 2);
     mapPinMainPositionY = Math.floor(parseInt(mapPinMain.style.top, 10) + mapPinMainHeigth);
@@ -56,18 +61,22 @@
           y: moveEvt.clientY
         };
 
-        if ((mapPinMain.offsetTop - shift.y) < window.data.MAP_MIN_HEIGHT - mapPinMainHeigth) {
-          mapPinMain.style.top = window.data.MAP_MIN_HEIGHT - mapPinMainHeigth + 'px';
-        } else if ((mapPinMain.offsetTop - shift.y) > window.data.MAP_MAX_HEIGHT - mapPinMainHeigth) {
-          mapPinMain.style.top = window.data.MAP_MAX_HEIGHT - mapPinMainHeigth + 'px';
-        } else if ((mapPinMain.offsetLeft - shift.x) < -mapPinMainWidth / 2) {
-          mapPinMain.style.left = -mapPinMainWidth / 2 + 'px';
-        } else if ((mapPinMain.offsetLeft - shift.x) > MAP_WIDTH - mapPinMainWidth / 2) {
-          mapPinMain.style.left = MAP_WIDTH - mapPinMainWidth / 2 + 'px';
-        } else {
-          mapPinMain.style.top = (mapPinMain.offsetTop - shift.y) + 'px';
-          mapPinMain.style.left = (mapPinMain.offsetLeft - shift.x) + 'px';
+        mapPinMain.style.top = (moveEvt.clientY - 70) + 'px';
+        mapPinMain.style.left = (moveEvt.clientX - 70) + 'px';
+
+        if ((mapPinMain.offsetTop - shift.y) < mapPinMainMinY) {
+          mapPinMain.style.top = mapPinMainMinY + 'px';
+        } else if ((mapPinMain.offsetTop - shift.y) > mapPinMainMaxY) {
+          mapPinMain.style.top = mapPinMainMaxY + 'px';
         }
+        if ((mapPinMain.offsetLeft - shift.x) < mapPinMainMinX) {
+          mapPinMain.style.left = mapPinMainMinX + 'px';
+        } else if ((mapPinMain.offsetLeft - shift.x) > mapPinMainMaxX) {
+          mapPinMain.style.left = mapPinMainMaxX + 'px';
+        }
+
+        mapPinMain.style.top = (mapPinMain.offsetTop - shift.y) + 'px';
+        mapPinMain.style.left = (mapPinMain.offsetLeft - shift.x) + 'px';
 
         newPosition();
       };
