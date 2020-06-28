@@ -68,18 +68,15 @@
         var pinY = mapPinMain.offsetTop - shift.y;
 
         if (pinY < mapPinMainMinY) {
-          pinY = mapPinMainMinY;
+          mapPinMain.style.top = mapPinMainMinY + 'px';
         } else if (pinY > mapPinMainMaxY) {
-          pinY = mapPinMainMaxY;
+          mapPinMain.style.top = mapPinMainMaxY + 'px';
         }
         if (pinX < mapPinMainMinX) {
-          pinX = mapPinMainMinX;
+          mapPinMain.style.left = mapPinMainMinX + 'px';
         } else if (pinX > mapPinMainMaxX) {
-          pinX = mapPinMainMaxX;
+          mapPinMain.style.left = mapPinMainMaxX + 'px';
         }
-
-        mapPinMain.style.top = pinY + 'px';
-        mapPinMain.style.left = pinX + 'px';
 
         newPosition();
       };
