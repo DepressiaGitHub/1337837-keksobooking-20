@@ -51,6 +51,8 @@
       var onMouseMove = function (moveEvt) {
         moveEvt.preventDefault();
 
+        MAP_WIDTH = document.querySelector('.map__pins').offsetWidth;
+        var siteWidth = document.documentElement.clientWidth;
         var shift = {
           x: startCoords.x - moveEvt.clientX,
           y: startCoords.y - moveEvt.clientY
@@ -62,7 +64,7 @@
         };
 
         mapPinMain.style.top = (moveEvt.clientY - 70 + pageYOffset) + 'px';
-        mapPinMain.style.left = (moveEvt.clientX - 70) + 'px';
+        mapPinMain.style.left = (moveEvt.clientX - (siteWidth - MAP_WIDTH) / 2 - mapPinMainWidth / 2) + 'px';
 
         var pinX = mapPinMain.offsetLeft - shift.x;
         var pinY = mapPinMain.offsetTop - shift.y;
