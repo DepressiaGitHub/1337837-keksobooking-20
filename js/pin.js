@@ -15,18 +15,12 @@
     return offerElement;
   };
 
-  var MAP_WIDTH = document.querySelector('.map__pins').offsetWidth;
   var inputAddress = document.querySelector('#address');
   var mapPinMain = document.querySelector('.map__pin--main');
   var mapPinMainWidth = 66;
   var mapPinMainHeigth = 84;
   var mapPinMainPositionX = Math.floor(570 + mapPinMainWidth / 2);
   var mapPinMainPositionY = Math.floor(375 + mapPinMainHeigth);
-
-  var mapPinMainMaxX = MAP_WIDTH - mapPinMainWidth / 2;
-  var mapPinMainMinX = -mapPinMainWidth / 2;
-  var mapPinMainMaxY = window.data.MAP_MAX_HEIGHT - mapPinMainHeigth;
-  var mapPinMainMinY = window.data.MAP_MIN_HEIGHT - mapPinMainHeigth;
 
   var newPosition = function () {
     mapPinMainPositionX = Math.floor(parseInt(mapPinMain.style.left, 10) + mapPinMainWidth / 2);
@@ -51,7 +45,11 @@
       var onMouseMove = function (moveEvt) {
         moveEvt.preventDefault();
 
-        MAP_WIDTH = document.querySelector('.map__pins').offsetWidth;
+        var MAP_WIDTH = document.querySelector('.map__pins').offsetWidth;
+        var mapPinMainMaxX = MAP_WIDTH - mapPinMainWidth / 2;
+        var mapPinMainMinX = -mapPinMainWidth / 2;
+        var mapPinMainMaxY = window.data.MAP_MAX_HEIGHT - mapPinMainHeigth;
+        var mapPinMainMinY = window.data.MAP_MIN_HEIGHT - mapPinMainHeigth;
         var siteWidth = document.documentElement.clientWidth;
         var shift = {
           x: startCoords.x - moveEvt.clientX,
