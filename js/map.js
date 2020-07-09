@@ -2,14 +2,14 @@
 
 (function () {
   var fragment = document.createDocumentFragment();
-  for (var i = 0; i < window.data.randomOffer.length; i++) {
-    fragment.appendChild(window.pin.renderPin(window.data.randomOffer[i]));
-  }
-
   var fragmentCard = document.createDocumentFragment();
-  for (i = 0; i < window.data.randomOffer.length; i++) {
-    fragmentCard.appendChild(window.card.renderCard(window.data.randomOffer[i]));
-  }
+
+  var successCard = function (Cards) {
+    for (var i = 0; i < Cards.length; i++) {
+      fragmentCard.appendChild(window.card.renderCard(Cards[i]));
+      fragment.appendChild(window.pin.renderPin(Cards[i]));
+    }
+  };
 
   var fieldsetList = document.querySelectorAll('fieldset');
   var userForm = document.querySelector('.ad-form');
@@ -20,7 +20,7 @@
   siteMap.classList.add('map--faded');
   userForm.classList.add('ad-form--disabled');
 
-  for (i = 0; i < fieldsetList.length; i++) {
+  for (var i = 0; i < fieldsetList.length; i++) {
     fieldsetList[i].setAttribute('disabled', 'disabled');
   }
 
@@ -75,6 +75,8 @@
       }
     });
   };
+
+  window.backend.load(successCard, window.util.errorMessage);
 
   window.map = {
     enableSite: enableSite,

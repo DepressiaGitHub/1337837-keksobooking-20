@@ -1,6 +1,9 @@
 'use strict';
 
 (function () {
+  var MAP_MIN_HEIGHT = 130;
+  var MAP_MAX_HEIGHT = 630;
+
   var pinTemplate = document.querySelector('#pin')
     .content
     .querySelector('.map__pin');
@@ -10,8 +13,8 @@
 
     offerElement.querySelector('img').src = data.author.avatar;
     offerElement.querySelector('img').alt = data.offer.title;
-    offerElement.style.left = data.location.x;
-    offerElement.style.top = data.location.y;
+    offerElement.style.left = data.location.x + 'px';
+    offerElement.style.top = data.location.y + 'px';
     return offerElement;
   };
 
@@ -48,8 +51,8 @@
         var MAP_WIDTH = document.querySelector('.map__pins').offsetWidth;
         var mapPinMainMaxX = MAP_WIDTH - mapPinMainWidth / 2;
         var mapPinMainMinX = -mapPinMainWidth / 2;
-        var mapPinMainMaxY = window.data.MAP_MAX_HEIGHT - mapPinMainHeigth;
-        var mapPinMainMinY = window.data.MAP_MIN_HEIGHT - mapPinMainHeigth;
+        var mapPinMainMaxY = MAP_MAX_HEIGHT - mapPinMainHeigth;
+        var mapPinMainMinY = MAP_MIN_HEIGHT - mapPinMainHeigth;
         var siteWidth = document.documentElement.clientWidth;
         var shift = {
           x: startCoords.x - moveEvt.clientX,

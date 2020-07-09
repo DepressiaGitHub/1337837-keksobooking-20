@@ -31,6 +31,25 @@
       var newArr = window.util.shuffleArray(arr);
 
       return newArr.slice(0, window.util.getRandom(0, newArr.length));
+    },
+
+    errorMessage: function (errorMessage) {
+      var alert = document.getElementById('error-block');
+
+      if (alert) {
+        node.textContent = errorMessage;
+      } else {
+        var node = document.createElement('div');
+        node.style = 'display: block; z-index: 9999; margin: 0 auto; text-align: center; color: white; background-color: gray;';
+        node.style.position = 'fixed';
+        node.style.left = 0;
+        node.style.right = 0;
+        node.style.fontSize = '40px';
+        node.id = 'error-block';
+
+        node.textContent = errorMessage;
+        document.body.insertAdjacentElement('afterbegin', node);
+      }
     }
   };
 })();
