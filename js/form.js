@@ -121,4 +121,60 @@
 
   availableRooms();
   userRooms.addEventListener('change', availableRooms);
+  var main = document.querySelector('main');
+
+  // Отправка формы.
+  var form = document.querySelector('.ad-form');
+
+
+  var successForm = function () {
+    var successTemplate = document.querySelector('#success')
+      .content
+      .querySelector('.success');
+
+    var successFormElement = successTemplate.cloneNode(true);
+
+    main.appendChild(successFormElement);
+  };
+
+  var errorForm = function () {
+    var errorTemplate = document.querySelector('#error')
+      .content
+      .querySelector('.error');
+
+    var errorFormElement = errorTemplate.cloneNode(true);
+
+    main.appendChild(errorFormElement);
+
+    var errorPopup = main.querySelector('.error');
+    var closeErrorPopup = main.querySelector('.error__button');
+
+    document.addEventListener('keydown', function (evt) {
+      if (evt.keyCode === 27) {
+        evt.preventDefault();
+        errorPopup.remove();
+      }
+    });
+
+    document.addEventListener('mousedown', function (evt) {
+      if (evt.button === 0) {
+        evt.preventDefault();
+        errorPopup.remove();
+      }
+    });
+
+    closeErrorPopup.addEventListener('click', function (evt) {
+      evt.preventDefault();
+      errorPopup.remove();
+    });
+
+
+  };
+
+  var submitOffer = function (evt) {
+    window.backend.save(new FormData(form), successForm, errorForm);
+    evt.preventDefault();
+  };
+
+  form.addEventListener('submit', submitOffer);
 })();
