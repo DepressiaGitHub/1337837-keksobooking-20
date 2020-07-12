@@ -105,8 +105,14 @@
 
   mapPinMain.addEventListener('keydown', function (evt) {
     if (evt.key === 'Enter') {
-      window.map.enableSite();
-      window.map.startMap();
+      evt.preventDefault();
+
+      var oneNew = document.querySelector('.map--faded');
+
+      if (oneNew) {
+        window.map.enableSite();
+        window.map.startMap();
+      }
     }
   });
 
