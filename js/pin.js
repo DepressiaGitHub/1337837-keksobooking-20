@@ -22,7 +22,7 @@
   var mapPinMain = document.querySelector('.map__pin--main');
   var mapPinMainStartX = mapPinMain.style.left;
   var mapPinMainStartY = mapPinMain.style.top;
-  var mapPinMainWidth = 66;
+  var mapPinMainWidth = 60;
   var mapPinMainHeigth = 84;
   var mapPinMainPositionX = Math.floor(570 + mapPinMainWidth / 2);
   var mapPinMainPositionY = Math.floor(375 + mapPinMainHeigth);

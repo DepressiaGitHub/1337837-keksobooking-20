@@ -35,6 +35,7 @@
   var pinElement = document.querySelector('.map__pins');
   var mapPinMain = document.querySelector('.map__pin--main');
   var cardElement = document.querySelector('.map__filters-container');
+  var inputAddress = document.querySelector('#address');
 
   siteMap.classList.add('map--faded');
   userForm.classList.add('ad-form--disabled');
@@ -53,8 +54,21 @@
     for (i = 0; i < fieldsetList.length; i++) {
       fieldsetList[i].removeAttribute('disabled');
     }
+
+    inputAddress.setAttribute('disabled', 'disabled');
     window.pin.newPosition();
   };
+
+  var resetButton = userForm.querySelector('.ad-form__reset');
+  var onResetClick = function (evt) {
+    evt.preventDefault();
+    userForm.reset();
+    mapPinMain.style.left = window.pin.mapPinMainStartX;
+    mapPinMain.style.top = window.pin.mapPinMainStartY;
+    window.pin.newPosition();
+  };
+
+  resetButton.addEventListener('click', onResetClick);
 
   var disableSite = function () {
     siteMap.classList.add('map--faded');
@@ -64,6 +78,7 @@
     clearCards();
     clearPins();
     userForm.reset();
+    window.pin.newPosition();
 
     for (i = 0; i < fieldsetList.length; i++) {
       fieldsetList[i].setAttribute('disabled', 'disabled');
@@ -78,10 +93,7 @@
     var closeCardsOnEsc = function (evt) {
       if (evt.key === 'Escape') {
         evt.preventDefault();
-
-        for (i = 0; i < openedCard.length; i++) {
-          openedCard[i].setAttribute('style', 'display: none;');
-        }
+        closeCardAll();
       }
     };
 
@@ -104,15 +116,17 @@
       });
     };
 
+    for (i = 0; i < openedCard.length; i++) {
+      closeCard(buttonCloseCard[i], openedCard[i]);
+    }
+
     var closeCardAll = function () {
       for (i = 0; i < openedCard.length; i++) {
         openedCard[i].setAttribute('style', 'display: none;');
       }
     };
 
-    for (i = 0; i < openedCard.length; i++) {
-      closeCard(buttonCloseCard[i], openedCard[i]);
-    }
+
   };
 
   window.map = {

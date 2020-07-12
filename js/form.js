@@ -14,8 +14,6 @@
   var userTypeOption = document.querySelector('#type');
   var inputAddress = document.querySelector('#address');
 
-  inputAddress.setAttribute('disabled', 'disabled');
-
   userTitleInput.addEventListener('invalid', function () {
     if (userTitleInput.validity.tooShort) {
       userTitleInput.setCustomValidity('Заголовок должен состоять минимум из 30 символов.');
