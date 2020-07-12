@@ -159,6 +159,7 @@
 
     document.addEventListener('keydown', onPopupEscPress);
     document.addEventListener('mousedown', onPopupMouseDown);
+    window.map.disableSite();
   };
 
   // Обработка ошибки при отправке формы.

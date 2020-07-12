@@ -9,17 +9,19 @@
     .querySelector('.map__pin');
 
   var renderPin = function (data) {
-    var offerElement = pinTemplate.cloneNode(true);
+    var offerPin = pinTemplate.cloneNode(true);
 
-    offerElement.querySelector('img').src = data.author.avatar;
-    offerElement.querySelector('img').alt = data.offer.title;
-    offerElement.style.left = data.location.x + 'px';
-    offerElement.style.top = data.location.y + 'px';
-    return offerElement;
+    offerPin.querySelector('img').src = data.author.avatar;
+    offerPin.querySelector('img').alt = data.offer.title;
+    offerPin.style.left = data.location.x + 'px';
+    offerPin.style.top = data.location.y + 'px';
+    return offerPin;
   };
 
   var inputAddress = document.querySelector('#address');
   var mapPinMain = document.querySelector('.map__pin--main');
+  var mapPinMainStartX = mapPinMain.style.left;
+  var mapPinMainStartY = mapPinMain.style.top;
   var mapPinMainWidth = 66;
   var mapPinMainHeigth = 84;
   var mapPinMainPositionX = Math.floor(570 + mapPinMainWidth / 2);
@@ -35,10 +37,15 @@
 
   mapPinMain.addEventListener('mousedown', function (evt) {
     if (evt.button === 0) {
-      window.map.enableSite();
-      window.map.startMap();
-
       evt.preventDefault();
+
+      var oneNew = document.querySelector('.map--faded');
+
+      if (oneNew) {
+        window.map.enableSite();
+        window.map.startMap();
+
+      }
 
       var startCoords = {
         x: evt.clientX,
@@ -105,7 +112,9 @@
 
   window.pin = {
     renderPin: renderPin,
-    newPosition: newPosition
+    newPosition: newPosition,
+    mapPinMainStartX: mapPinMainStartX,
+    mapPinMainStartY: mapPinMainStartY
   };
 
 })();
