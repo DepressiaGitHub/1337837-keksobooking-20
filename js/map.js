@@ -46,6 +46,7 @@
 
   var enableSite = function () {
     window.backend.load(successCard, window.util.errorMessage);
+
     siteMap.classList.remove('map--faded');
     userForm.classList.remove('ad-form--disabled');
     pinElement.appendChild(fragment);
@@ -70,6 +71,23 @@
 
   resetButton.addEventListener('click', onResetClick);
 
+  var openedCard;
+
+  var closeCardsOnEsc = function (evt) {
+    if (evt.key === 'Escape') {
+      evt.preventDefault();
+      closeCardAll();
+    }
+  };
+
+  var closeCardAll = function () {
+    for (i = 0; i < openedCard.length; i++) {
+      openedCard[i].setAttribute('style', 'display: none;');
+    }
+
+    document.removeEventListener('keydown', closeCardsOnEsc);
+  };
+
   var disableSite = function () {
     siteMap.classList.add('map--faded');
     userForm.classList.add('ad-form--disabled');
@@ -83,50 +101,43 @@
     for (i = 0; i < fieldsetList.length; i++) {
       fieldsetList[i].setAttribute('disabled', 'disabled');
     }
+
+    closeCardAll();
   };
 
   var startMap = function () {
     var buttonCloseCard = document.querySelectorAll('.popup__close');
     var buttonOpenCard = document.querySelectorAll('.map__pin');
-    var openedCard = document.querySelectorAll('.map__card');
+    openedCard = document.querySelectorAll('.map__card');
 
-    var closeCardsOnEsc = function (evt) {
-      if (evt.key === 'Escape') {
-        evt.preventDefault();
-        closeCardAll();
-      }
-    };
-
-    var showCard = function (pin, card) {
-      pin.addEventListener('click', function () {
-        closeCardAll();
-        card.removeAttribute('style');
-      });
+    var showCard = function (card) {
+      closeCardAll();
+      card.removeAttribute('style');
 
       document.addEventListener('keydown', closeCardsOnEsc);
     };
 
-    for (i = 1; i < buttonOpenCard.length; i++) {
-      showCard(buttonOpenCard[i], openedCard[i - 1]);
-    }
-
-    var closeCard = function (pin, card) {
-      pin.addEventListener('click', function () {
-        card.setAttribute('style', 'display: none;');
+    var addPinClickOpen = function (button, card) {
+      button.addEventListener('click', function (evt) {
+        evt.preventDefault();
+        showCard(card);
       });
     };
 
-    for (i = 0; i < openedCard.length; i++) {
-      closeCard(buttonCloseCard[i], openedCard[i]);
+    for (i = 1; i < buttonOpenCard.length; i++) {
+      addPinClickOpen(buttonOpenCard[i], openedCard[i - 1]);
     }
 
-    var closeCardAll = function () {
-      for (i = 0; i < openedCard.length; i++) {
-        openedCard[i].setAttribute('style', 'display: none;');
-      }
+    var addPinClickClose = function (button) {
+      button.addEventListener('click', function (evt) {
+        evt.preventDefault();
+        closeCardAll();
+      });
     };
 
-
+    for (i = 0; i < buttonCloseCard.length; i++) {
+      addPinClickClose(buttonCloseCard[i]);
+    }
   };
 
   window.map = {

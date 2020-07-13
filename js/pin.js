@@ -44,7 +44,6 @@
       if (oneNew) {
         window.map.enableSite();
         window.map.startMap();
-
       }
 
       var startCoords = {
