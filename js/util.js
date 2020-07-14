@@ -50,27 +50,6 @@
         node.textContent = message;
         document.body.insertAdjacentElement('afterbegin', node);
       }
-    },
-
-    // closePopup: function (popup, popupButton) {
-    //   document.addEventListener('keydown', function (evt) {
-    //     if (evt.keyCode === 27) {
-    //       evt.preventDefault();
-    //       popup.remove();
-    //     }
-    //   });
-
-    //   document.addEventListener('mousedown', function (evt) {
-    //     if (evt.button === 0) {
-    //       evt.preventDefault();
-    //       popup.remove();
-    //     }
-    //   });
-
-    //   popupButton.addEventListener('click', function (evt) {
-    //     evt.preventDefault();
-    //     popup.remove();
-    //   });
-    // }
+    }
   };
 })();
