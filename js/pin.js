@@ -9,18 +9,20 @@
     .querySelector('.map__pin');
 
   var renderPin = function (data) {
-    var offerElement = pinTemplate.cloneNode(true);
+    var offerPin = pinTemplate.cloneNode(true);
 
-    offerElement.querySelector('img').src = data.author.avatar;
-    offerElement.querySelector('img').alt = data.offer.title;
-    offerElement.style.left = data.location.x + 'px';
-    offerElement.style.top = data.location.y + 'px';
-    return offerElement;
+    offerPin.querySelector('img').src = data.author.avatar;
+    offerPin.querySelector('img').alt = data.offer.title;
+    offerPin.style.left = data.location.x + 'px';
+    offerPin.style.top = data.location.y + 'px';
+    return offerPin;
   };
 
   var inputAddress = document.querySelector('#address');
   var mapPinMain = document.querySelector('.map__pin--main');
-  var mapPinMainWidth = 66;
+  var mapPinMainStartX = mapPinMain.style.left;
+  var mapPinMainStartY = mapPinMain.style.top;
+  var mapPinMainWidth = 60;
   var mapPinMainHeigth = 84;
   var mapPinMainPositionX = Math.floor(570 + mapPinMainWidth / 2);
   var mapPinMainPositionY = Math.floor(375 + mapPinMainHeigth);
@@ -35,10 +37,14 @@
 
   mapPinMain.addEventListener('mousedown', function (evt) {
     if (evt.button === 0) {
-      window.map.enableSite();
-      window.map.startMap();
-
       evt.preventDefault();
+
+      var oneNew = document.querySelector('.map--faded');
+
+      if (oneNew) {
+        window.map.enableSite();
+        window.map.startMap();
+      }
 
       var startCoords = {
         x: evt.clientX,
@@ -98,14 +104,22 @@
 
   mapPinMain.addEventListener('keydown', function (evt) {
     if (evt.key === 'Enter') {
-      window.map.enableSite();
-      window.map.startMap();
+      evt.preventDefault();
+
+      var oneNew = document.querySelector('.map--faded');
+
+      if (oneNew) {
+        window.map.enableSite();
+        window.map.startMap();
+      }
     }
   });
 
   window.pin = {
     renderPin: renderPin,
-    newPosition: newPosition
+    newPosition: newPosition,
+    mapPinMainStartX: mapPinMainStartX,
+    mapPinMainStartY: mapPinMainStartY
   };
 
 })();

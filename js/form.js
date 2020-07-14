@@ -14,8 +14,6 @@
   var userTypeOption = document.querySelector('#type');
   var inputAddress = document.querySelector('#address');
 
-  inputAddress.setAttribute('disabled', 'disabled');
-
   userTitleInput.addEventListener('invalid', function () {
     if (userTitleInput.validity.tooShort) {
       userTitleInput.setCustomValidity('Заголовок должен состоять минимум из 30 символов.');
@@ -121,4 +119,94 @@
 
   availableRooms();
   userRooms.addEventListener('change', availableRooms);
+  var main = document.querySelector('main');
+
+  // Находим форму.
+  var form = document.querySelector('.ad-form');
+
+  // Обработка успешной отправки формы.
+  var successForm = function () {
+    var successTemplate = document.querySelector('#success')
+      .content
+      .querySelector('.success');
+
+    var successFormElement = successTemplate.cloneNode(true);
+
+    main.appendChild(successFormElement);
+
+    var removePopup = function () {
+      popup.remove();
+      document.removeEventListener('keydown', onPopupEscPress);
+      document.removeEventListener('mousedown', onPopupMouseDown);
+    };
+
+    var popup = main.querySelector('.success');
+    var onPopupEscPress = function (evt) {
+      if (evt.keyCode === 27) {
+        evt.preventDefault();
+        removePopup();
+      }
+    };
+
+    var onPopupMouseDown = function (evt) {
+      if (evt.button === 0) {
+        evt.preventDefault();
+        removePopup();
+      }
+    };
+
+    document.addEventListener('keydown', onPopupEscPress);
+    document.addEventListener('mousedown', onPopupMouseDown);
+    window.map.disableSite();
+  };
+
+  // Обработка ошибки при отправке формы.
+  var errorForm = function () {
+    var errorTemplate = document.querySelector('#error')
+      .content
+      .querySelector('.error');
+
+    var errorFormElement = errorTemplate.cloneNode(true);
+
+    main.appendChild(errorFormElement);
+
+    var removePopup = function () {
+      popup.remove();
+      document.removeEventListener('keydown', onPopupEscPress);
+      document.removeEventListener('mousedown', onPopupMouseDown);
+    };
+
+    var popup = main.querySelector('.error');
+    var closePopup = main.querySelector('.error__button');
+    var onPopupEscPress = function (evt) {
+      if (evt.keyCode === 27) {
+        evt.preventDefault();
+        removePopup();
+      }
+    };
+
+    var onPopupMouseDown = function (evt) {
+      if (evt.button === 0) {
+        evt.preventDefault();
+        removePopup();
+      }
+    };
+
+    var onPopupButtonClick = function (evt) {
+      evt.preventDefault();
+      removePopup();
+    };
+
+    document.addEventListener('keydown', onPopupEscPress);
+    document.addEventListener('mousedown', onPopupMouseDown);
+    closePopup.addEventListener('click', onPopupButtonClick);
+  };
+
+  var submitOffer = function (evt) {
+    inputAddress.removeAttribute('disabled');
+    window.backend.save(new FormData(form), successForm, errorForm);
+    evt.preventDefault();
+  };
+
+  form.addEventListener('submit', submitOffer);
 })();
