@@ -36,6 +36,15 @@
     return text;
   };
 
+  var createFeature = function (featureList) {
+    var fragmentFeature = document.createDocumentFragment();
+    featureList.forEach(function (feature) {
+      var featureItem = document.createElement('li');
+      featureItem.classList = 'popup__feature popup__feature--' + feature;
+      fragmentFeature.appendChild(featureItem);
+    });
+    return fragmentFeature;
+  };
 
   var renderCard = function (data) {
     var mapCardElement = cardTemplate.cloneNode(true);
@@ -44,6 +53,9 @@
     var photoElement = mapCardElement.querySelector('.popup__photos')
       .querySelector('.popup__photo');
 
+    // Чистим в шаблоне список features.
+    mapCardElement.querySelector('.popup__features').innerHTML = '';
+
     mapCardElement.setAttribute('style', 'display: none;');
     mapCardElement.querySelector('.popup__title').textContent = data.offer.title;
     mapCardElement.querySelector('.popup__text--address').textContent = data.offer.address;
@@ -51,7 +63,7 @@
     mapCardElement.querySelector('.popup__type').textContent = getHouseType(data.offer.type);
     mapCardElement.querySelector('.popup__text--capacity').textContent = getTextAboutRooms(data.offer.rooms, data.offer.guests);
     mapCardElement.querySelector('.popup__text--time').textContent = 'Заезд после ' + data.offer.checkin + ', выезд до ' + data.offer.checkout;
-    mapCardElement.querySelector('.popup__features').textContent = data.offer.features.join(', ');
+    mapCardElement.querySelector('.popup__features').appendChild(createFeature(data.offer.features));
     mapCardElement.querySelector('.popup__description').textContent = data.offer.description;
     mapCardElement.querySelector('.popup__avatar').src = data.author.avatar;
 

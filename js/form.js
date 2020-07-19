@@ -12,7 +12,6 @@
   var userTitleInput = document.querySelector('#title');
   var userPriceInput = document.querySelector('#price');
   var userTypeOption = document.querySelector('#type');
-  var inputAddress = document.querySelector('#address');
 
   userTitleInput.addEventListener('invalid', function () {
     if (userTitleInput.validity.tooShort) {
@@ -203,7 +202,6 @@
   };
 
   var submitOffer = function (evt) {
-    inputAddress.removeAttribute('disabled');
     window.backend.save(new FormData(form), successForm, errorForm);
     evt.preventDefault();
   };

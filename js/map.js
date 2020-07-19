@@ -5,6 +5,8 @@
   var fragmentCard = document.createDocumentFragment();
 
   var successCard = function (Cards) {
+    fragmentCard.innerHTML = '';
+    fragment.innerHTML = '';
     for (var i = 0; i < Cards.length; i++) {
       fragmentCard.appendChild(window.card.renderCard(Cards[i]));
       fragment.appendChild(window.pin.renderPin(Cards[i]));
@@ -35,7 +37,6 @@
   var pinElement = document.querySelector('.map__pins');
   var mapPinMain = document.querySelector('.map__pin--main');
   var cardElement = document.querySelector('.map__filters-container');
-  var inputAddress = document.querySelector('#address');
 
   siteMap.classList.add('map--faded');
   userForm.classList.add('ad-form--disabled');
@@ -56,7 +57,6 @@
       fieldsetList[i].removeAttribute('disabled');
     }
 
-    inputAddress.setAttribute('disabled', 'disabled');
     window.pin.newPosition();
   };
 
