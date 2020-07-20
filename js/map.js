@@ -1,42 +1,20 @@
 'use strict';
 
 (function () {
-  var fragment = document.createDocumentFragment();
-  var fragmentCard = document.createDocumentFragment();
 
-  var successCard = function (Cards) {
-    fragmentCard.innerHTML = '';
-    fragment.innerHTML = '';
-    for (var i = 0; i < Cards.length; i++) {
-      fragmentCard.appendChild(window.card.renderCard(Cards[i]));
-      fragment.appendChild(window.pin.renderPin(Cards[i]));
-    }
-  };
-
-  window.backend.load(successCard, window.util.errorMessage);
-
-  var clearCards = function () {
-    var allCards = siteMap.querySelectorAll('.map__card');
-
-    for (var i = 0; i < allCards.length; i++) {
-      siteMap.removeChild(allCards[i]);
-    }
-  };
+  var siteMap = document.querySelector('.map');
+  var pinElement = document.querySelector('.map__pins');
 
   var clearPins = function () {
-    var allPins = pinElement.querySelectorAll('.map__pin');
-
-    for (var i = 1; i < allPins.length; i++) {
-      pinElement.removeChild(allPins[i]);
+    var allPins = pinElement.querySelectorAll('.map__pin:not(.map__pin--main)');
+    for (var i = 0; i < allPins.length; i++) {
+      allPins[i].classList.add('hidden');
     }
   };
 
   var fieldsetList = document.querySelectorAll('fieldset');
   var userForm = document.querySelector('.ad-form');
-  var siteMap = document.querySelector('.map');
-  var pinElement = document.querySelector('.map__pins');
   var mapPinMain = document.querySelector('.map__pin--main');
-  var cardElement = document.querySelector('.map__filters-container');
 
   siteMap.classList.add('map--faded');
   userForm.classList.add('ad-form--disabled');
@@ -46,16 +24,17 @@
   }
 
   var enableSite = function () {
-    window.backend.load(successCard, window.util.errorMessage);
-
     siteMap.classList.remove('map--faded');
     userForm.classList.remove('ad-form--disabled');
-    pinElement.appendChild(fragment);
-    siteMap.insertBefore(fragmentCard, cardElement);
+    pinElement = document.querySelector('.map__pins');
 
     for (i = 0; i < fieldsetList.length; i++) {
       fieldsetList[i].removeAttribute('disabled');
     }
+
+    var filters = document.querySelector('.map__filters');
+    var houseType = filters.querySelector('#housing-type');
+    window.render.updateOffer(houseType.value);
 
     window.pin.newPosition();
   };
@@ -82,7 +61,7 @@
 
   var closeCardAll = function () {
     for (i = 0; i < openedCard.length; i++) {
-      openedCard[i].setAttribute('style', 'display: none;');
+      openedCard[i].classList.add('hidden');
     }
 
     document.removeEventListener('keydown', closeCardsOnEsc);
@@ -93,7 +72,7 @@
     userForm.classList.add('ad-form--disabled');
     mapPinMain.style.left = window.pin.mapPinMainStartX;
     mapPinMain.style.top = window.pin.mapPinMainStartY;
-    clearCards();
+    closeCardAll();
     clearPins();
     userForm.reset();
     window.pin.newPosition();
@@ -107,12 +86,12 @@
 
   var startMap = function () {
     var buttonCloseCard = document.querySelectorAll('.popup__close');
-    var buttonOpenCard = document.querySelectorAll('.map__pin');
+    var buttonOpenCard = document.querySelectorAll('.map__pin:not(.map__pin--main)');
     openedCard = document.querySelectorAll('.map__card');
 
     var showCard = function (card) {
       closeCardAll();
-      card.removeAttribute('style');
+      card.classList.remove('hidden');
 
       document.addEventListener('keydown', closeCardsOnEsc);
     };
@@ -124,8 +103,8 @@
       });
     };
 
-    for (i = 1; i < buttonOpenCard.length; i++) {
-      addPinClickOpen(buttonOpenCard[i], openedCard[i - 1]);
+    for (i = 0; i < buttonOpenCard.length; i++) {
+      addPinClickOpen(buttonOpenCard[i], openedCard[i]);
     }
 
     var addPinClickClose = function (button) {
