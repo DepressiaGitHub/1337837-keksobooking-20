@@ -37,8 +37,9 @@
 
   var filters = document.querySelector('.map__filters');
 
-  var setOnChangeListener = function() {
+  var setOnChangeListener = function () {
     filters.addEventListener('change', function () {
+      // debounce не работает, хз почему.
       window.debounce(render(window.homeFilter.updateOffer()));
       window.map.startMap();
     });

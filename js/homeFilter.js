@@ -21,19 +21,22 @@
   };
 
   var getFilteredByPrice = function (card) {
+    var answer;
     switch (housePrice.value) {
       case 'middle':
-        return card.offer.price >= 10000 && card.offer.price <= 50000;
+        answer = card.offer.price >= 10000 && card.offer.price <= 50000;
         break;
 
       case 'low':
-        return card.offer.price < 10000;
+        answer = card.offer.price < 10000;
         break;
 
       case 'high':
-        return card.offer.price > 50000;
+        answer = card.offer.price > 50000;
         break;
     }
+
+    return answer;
   };
 
   var getFilteredByRooms = function (card) {
@@ -46,21 +49,25 @@
 
   var getCheckedFeatures = function () {
     return Array.prototype.slice.call(checkBoxes)
-      .filter(function(checkBox){ return checkBox.checked; })
-      .map(function(checkBox) { return checkBox.value; });
+      .filter(function (checkBox) {
+        return checkBox.checked;
+      })
+      .map(function (checkBox) {
+        return checkBox.value;
+      });
   };
 
-  var getFilteredByFeatures = function(checkedFeatures) {
+  var getFilteredByFeatures = function (checkedFeatures) {
     return function (card) {
       var isVisible = true;
       for (var i = 0; i < checkedFeatures.length; i++) {
-        if(!card.offer.features.includes(checkedFeatures[i])) {
+        if (!card.offer.features.includes(checkedFeatures[i])) {
           isVisible = false;
           break;
         }
       }
       return isVisible;
-    }
+    };
   };
 
   var updateOffer = function () {

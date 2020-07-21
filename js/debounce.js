@@ -10,5 +10,5 @@
       window.clearTimeout(lastTimeout);
     }
     lastTimeout = window.setTimeout(cb, DEBOUNCE_INTERVAL);
-  }
+  };
 })();
