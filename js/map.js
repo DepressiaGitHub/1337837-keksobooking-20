@@ -34,7 +34,6 @@
 
     var filters = document.querySelector('.map__filters');
     var houseType = filters.querySelector('#housing-type');
-    window.render.updateOffer(houseType.value);
 
     window.pin.newPosition();
   };

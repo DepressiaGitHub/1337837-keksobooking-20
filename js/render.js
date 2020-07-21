@@ -40,16 +40,18 @@
 
   var successOffer = function (Cards) {
     offers = Cards;
-    updateOffer(Cards);
+    updateOffer(offers);
   };
 
-  var updateOffer = function (type) {
+  var getFilteredByType = function (el) {
+    return el.offer.type === houseType.value;
+  };
+
+  var updateOffer = function () {
     var filtered = offers.slice();
 
-    if (type !== ANY) {
-      filtered = offers.filter(function (el) {
-        return el.offer.type === type;
-      });
+    if (houseType.value !== ANY) {
+      filtered = filtered.filter(getFilteredByType);
     }
 
     render(filtered);
@@ -61,12 +63,8 @@
   var houseType = filters.querySelector('#housing-type');
 
   filters.addEventListener('change', function () {
-    updateOffer(houseType.value);
+    updateOffer();
     window.map.startMap();
   });
-
-  window.render = {
-    updateOffer: updateOffer
-  };
 })();
 
