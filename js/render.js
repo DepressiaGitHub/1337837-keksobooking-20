@@ -5,16 +5,14 @@
   var offers = [];
 
   var removePins = function () {
-    var pins = document.querySelectorAll('.map__pin:not(.map__pin--main)');
-    pins.forEach(function (element) {
-      element.remove();
+    document.querySelectorAll('.map__pin:not(.map__pin--main)').forEach(function (el) {
+      el.remove();
     });
   };
 
   var removeCards = function () {
-    var cards = document.querySelectorAll('.map__card');
-    cards.forEach(function (element) {
-      element.remove();
+    document.querySelectorAll('.map__card').forEach(function (el) {
+      el.remove();
     });
   };
 
