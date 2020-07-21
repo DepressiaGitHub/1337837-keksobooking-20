@@ -44,43 +44,24 @@
   };
 
   var updateOffer = function (type) {
-    var filtred = [];
+    var filtered = offers.slice();
 
-    switch (type) {
-      case 'any':
-        filtred = offers.slice();
-        break;
-      case 'palace':
-        filtred = offers.filter(function (el) {
-          return el.offer.type === 'palace';
-        });
-        break;
-      case 'flat':
-        filtred = offers.filter(function (el) {
-          return el.offer.type === 'flat';
-        });
-        break;
-      case 'house':
-        filtred = offers.filter(function (el) {
-          return el.offer.type === 'house';
-        });
-        break;
-      case 'bungalo':
-        filtred = offers.filter(function (el) {
-          return el.offer.type === 'bungalo';
-        });
-        break;
+    if (type !== ANY) {
+      filtered = offers.filter(function (el) {
+        return el.offer.type === type;
+      });
     }
 
-    render(filtred);
+    render(filtered);
   };
 
   window.backend.load(successOffer, window.util.errorMessage);
 
   var filters = document.querySelector('.map__filters');
+  var ANY = 'any';
   var houseType = filters.querySelector('#housing-type');
 
-  houseType.addEventListener('change', function () {
+  filters.addEventListener('change', function () {
     updateOffer(houseType.value);
     window.map.startMap();
   });
@@ -89,3 +70,4 @@
     updateOffer: updateOffer
   };
 })();
+

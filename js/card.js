@@ -52,7 +52,7 @@
 
   var photoElementTemplate = photoElement.cloneNode(true);
 
-  var creatPhoto = function (photoList) {
+  var createPhoto = function (photoList) {
     var fragmentPhoto = document.createDocumentFragment();
     photoList.forEach(function (photo) {
       var photoItem = photoElementTemplate.cloneNode(true);
@@ -80,7 +80,7 @@
     mapCardElement.querySelector('.popup__features').appendChild(createFeature(data.offer.features));
     mapCardElement.querySelector('.popup__description').textContent = data.offer.description;
     mapCardElement.querySelector('.popup__avatar').src = data.author.avatar;
-    mapCardElement.querySelector('.popup__photos').appendChild(creatPhoto(data.offer.photos));
+    mapCardElement.querySelector('.popup__photos').appendChild(createPhoto(data.offer.photos));
 
     return mapCardElement;
   };
