@@ -2,7 +2,9 @@
 
 (function () {
   var MAX_PIN_COUNT = 5;
+  var ANY = 'any';
   var offers = [];
+
 
   var removePins = function () {
     document.querySelectorAll('.map__pin:not(.map__pin--main)').forEach(function (el) {
@@ -56,7 +58,6 @@
   window.backend.load(successOffer, window.util.errorMessage);
 
   var filters = document.querySelector('.map__filters');
-  var ANY = 'any';
   var houseType = filters.querySelector('#housing-type');
 
   filters.addEventListener('change', function () {
