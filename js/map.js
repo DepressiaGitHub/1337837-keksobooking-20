@@ -4,20 +4,18 @@
 
   var siteMap = document.querySelector('.map');
   var pinElement = document.querySelector('.map__pins');
-
-  var clearPins = function () {
-    var allPins = pinElement.querySelectorAll('.map__pin:not(.map__pin--main)');
-    for (var i = 0; i < allPins.length; i++) {
-      allPins[i].classList.add('hidden');
-    }
-  };
-
   var fieldsetList = document.querySelectorAll('fieldset');
   var userForm = document.querySelector('.ad-form');
   var mapPinMain = document.querySelector('.map__pin--main');
 
   siteMap.classList.add('map--faded');
   userForm.classList.add('ad-form--disabled');
+
+  var clearPins = function () {
+    pinElement.querySelectorAll('.map__pin:not(.map__pin--main)').forEach(function (el) {
+      el.classList.add('hidden');
+    });
+  };
 
   for (var i = 0; i < fieldsetList.length; i++) {
     fieldsetList[i].setAttribute('disabled', 'disabled');
@@ -32,10 +30,26 @@
       fieldsetList[i].removeAttribute('disabled');
     }
 
-    var filters = document.querySelector('.map__filters');
-    var houseType = filters.querySelector('#housing-type');
-
     window.pin.newPosition();
+    window.render.render(window.homeFilter.updateOffer());
+    window.render.startFilters(window.homeFilter.updateOffer());
+  };
+
+  var disableSite = function () {
+    siteMap.classList.add('map--faded');
+    userForm.classList.add('ad-form--disabled');
+    mapPinMain.style.left = window.pin.mapPinMainStartX;
+    mapPinMain.style.top = window.pin.mapPinMainStartY;
+    closeCardAll();
+    clearPins();
+    userForm.reset();
+    window.pin.newPosition();
+
+    for (i = 0; i < fieldsetList.length; i++) {
+      fieldsetList[i].setAttribute('disabled', 'disabled');
+    }
+
+    closeCardAll();
   };
 
   var resetButton = userForm.querySelector('.ad-form__reset');
@@ -64,23 +78,6 @@
     }
 
     document.removeEventListener('keydown', closeCardsOnEsc);
-  };
-
-  var disableSite = function () {
-    siteMap.classList.add('map--faded');
-    userForm.classList.add('ad-form--disabled');
-    mapPinMain.style.left = window.pin.mapPinMainStartX;
-    mapPinMain.style.top = window.pin.mapPinMainStartY;
-    closeCardAll();
-    clearPins();
-    userForm.reset();
-    window.pin.newPosition();
-
-    for (i = 0; i < fieldsetList.length; i++) {
-      fieldsetList[i].setAttribute('disabled', 'disabled');
-    }
-
-    closeCardAll();
   };
 
   var startMap = function () {

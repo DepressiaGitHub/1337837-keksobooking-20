@@ -2,9 +2,6 @@
 
 (function () {
   var MAX_PIN_COUNT = 5;
-  var ANY = 'any';
-  var offers = [];
-
 
   var removePins = function () {
     document.querySelectorAll('.map__pin:not(.map__pin--main)').forEach(function (el) {
@@ -38,33 +35,18 @@
     siteMap.insertBefore(fragmentCard, cardElement);
   };
 
-  var successOffer = function (Cards) {
-    offers = Cards;
-    updateOffer(offers);
-  };
-
-  var getFilteredByType = function (el) {
-    return el.offer.type === houseType.value;
-  };
-
-  var updateOffer = function () {
-    var filtered = offers.slice();
-
-    if (houseType.value !== ANY) {
-      filtered = filtered.filter(getFilteredByType);
-    }
-
-    render(filtered);
-  };
-
-  window.backend.load(successOffer, window.util.errorMessage);
-
   var filters = document.querySelector('.map__filters');
-  var houseType = filters.querySelector('#housing-type');
 
-  filters.addEventListener('change', function () {
-    updateOffer();
-    window.map.startMap();
-  });
+  var setOnChangeListener = function() {
+    filters.addEventListener('change', function () {
+      window.debounce(render(window.homeFilter.updateOffer()));
+      window.map.startMap();
+    });
+  };
+
+  window.render = {
+    startFilters: setOnChangeListener,
+    render: render
+  };
 })();
 
