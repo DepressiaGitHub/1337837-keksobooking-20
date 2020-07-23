@@ -47,7 +47,7 @@
     filters.addEventListener('change', window.debounce(onFilterChange));
   };
 
-  window.render = {
+  window.offer = {
     startFilters: setOnChangeListener,
     render: render
   };

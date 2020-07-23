@@ -32,8 +32,8 @@
     });
 
     window.pin.newPosition();
-    window.render.render();
-    window.render.startFilters();
+    window.offer.render();
+    window.offer.startFilters();
   };
 
   var disableSite = function () {
