@@ -18,18 +18,18 @@
     });
   };
 
-  for (var i = 0; i < fieldsetList.length; i++) {
-    fieldsetList[i].setAttribute('disabled', 'disabled');
-  }
+  fieldsetList.forEach(function (el) {
+    el.setAttribute('disabled', 'disabled');
+  });
 
   var enableSite = function () {
     siteMap.classList.remove('map--faded');
     userForm.classList.remove('ad-form--disabled');
     pinElement = document.querySelector('.map__pins');
 
-    for (i = 0; i < fieldsetList.length; i++) {
-      fieldsetList[i].removeAttribute('disabled');
-    }
+    fieldsetList.forEach(function (el) {
+      el.removeAttribute('disabled');
+    });
 
     window.pin.newPosition();
     window.render.render();
@@ -53,9 +53,9 @@
     mapPinMain.style.top = window.pin.mapPinMainStartY;
     window.pin.newPosition();
 
-    for (i = 0; i < fieldsetList.length; i++) {
-      fieldsetList[i].setAttribute('disabled', 'disabled');
-    }
+    fieldsetList.forEach(function (el) {
+      el.setAttribute('disabled', 'disabled');
+    });
   };
 
   var resetButton = userForm.querySelector('.ad-form__reset');
@@ -76,9 +76,9 @@
   };
 
   var closeCardAll = function () {
-    for (i = 0; i < openedCard.length; i++) {
-      openedCard[i].classList.add('hidden');
-    }
+    openedCard.forEach(function (el) {
+      el.classList.add('hidden');
+    });
 
     document.removeEventListener('keydown', closeCardsOnEsc);
   };
@@ -102,7 +102,7 @@
       });
     };
 
-    for (i = 0; i < buttonOpenCard.length; i++) {
+    for (var i = 0; i < buttonOpenCard.length; i++) {
       addPinClickOpen(buttonOpenCard[i], openedCard[i]);
     }
 
@@ -113,9 +113,9 @@
       });
     };
 
-    for (i = 0; i < buttonCloseCard.length; i++) {
-      addPinClickClose(buttonCloseCard[i]);
-    }
+    buttonCloseCard.forEach(function (el) {
+      addPinClickClose(el);
+    });
   };
 
   window.map = {

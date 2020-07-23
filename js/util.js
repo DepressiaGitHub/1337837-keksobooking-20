@@ -19,6 +19,11 @@
         node.textContent = message;
         document.body.insertAdjacentElement('afterbegin', node);
       }
+    },
+
+    KEY_CODE: {
+      ESC: 27,
+      LEFT_MOUSE: 0
     }
   };
 })();

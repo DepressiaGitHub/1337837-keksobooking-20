@@ -3,6 +3,8 @@
 (function () {
   var MAP_MIN_HEIGHT = 130;
   var MAP_MAX_HEIGHT = 630;
+  var MAP_PIN_MAIN_WIDTH = 60;
+  var MAP_PIN_MAIN_HEIGTH = 54;
 
   var pinTemplate = document.querySelector('#pin')
     .content
@@ -22,21 +24,19 @@
   var mapPinMain = document.querySelector('.map__pin--main');
   var mapPinMainStartX = mapPinMain.style.left;
   var mapPinMainStartY = mapPinMain.style.top;
-  var mapPinMainWidth = 60;
-  var mapPinMainHeigth = 84;
-  var mapPinMainPositionX = Math.floor(570 + mapPinMainWidth / 2);
-  var mapPinMainPositionY = Math.floor(375 + mapPinMainHeigth);
+  var mapPinMainPositionX = Math.floor(parseInt(mapPinMainStartX, 10) + MAP_PIN_MAIN_WIDTH / 2);
+  var mapPinMainPositionY = Math.floor(parseInt(mapPinMainStartY, 10) + MAP_PIN_MAIN_HEIGTH);
 
   var newPosition = function () {
-    mapPinMainPositionX = Math.floor(parseInt(mapPinMain.style.left, 10) + mapPinMainWidth / 2);
-    mapPinMainPositionY = Math.floor(parseInt(mapPinMain.style.top, 10) + mapPinMainHeigth);
+    mapPinMainPositionX = Math.floor(parseInt(mapPinMain.style.left, 10) + MAP_PIN_MAIN_WIDTH / 2);
+    mapPinMainPositionY = Math.floor(parseInt(mapPinMain.style.top, 10) + MAP_PIN_MAIN_HEIGTH);
     inputAddress.value = mapPinMainPositionX + ', ' + mapPinMainPositionY;
   };
 
   inputAddress.value = mapPinMainPositionX + ', ' + mapPinMainPositionY;
 
   mapPinMain.addEventListener('mousedown', function (evt) {
-    if (evt.button === 0) {
+    if (evt.button === window.util.KEY_CODE.LEFT_MOUSE) {
       evt.preventDefault();
 
       var oneNew = document.querySelector('.map--faded');
@@ -54,11 +54,11 @@
       var onMouseMove = function (moveEvt) {
         moveEvt.preventDefault();
 
-        var MAP_WIDTH = document.querySelector('.map__pins').offsetWidth;
-        var mapPinMainMaxX = MAP_WIDTH - mapPinMainWidth / 2;
-        var mapPinMainMinX = -mapPinMainWidth / 2;
-        var mapPinMainMaxY = MAP_MAX_HEIGHT - mapPinMainHeigth;
-        var mapPinMainMinY = MAP_MIN_HEIGHT - mapPinMainHeigth;
+        var mapWidth = document.querySelector('.map__pins').offsetWidth;
+        var mapPinMainMaxX = mapWidth - MAP_PIN_MAIN_WIDTH / 2;
+        var mapPinMainMinX = -MAP_PIN_MAIN_WIDTH / 2;
+        var mapPinMainMaxY = MAP_MAX_HEIGHT - MAP_PIN_MAIN_HEIGTH;
+        var mapPinMainMinY = MAP_MIN_HEIGHT - MAP_PIN_MAIN_HEIGTH;
         var siteWidth = document.documentElement.clientWidth;
         var shift = {
           x: startCoords.x - moveEvt.clientX,
@@ -71,7 +71,7 @@
         };
 
         mapPinMain.style.top = (moveEvt.clientY - 70 + pageYOffset) + 'px';
-        mapPinMain.style.left = (moveEvt.clientX - (siteWidth - MAP_WIDTH) / 2 - mapPinMainWidth / 2) + 'px';
+        mapPinMain.style.left = (moveEvt.clientX - (siteWidth - mapWidth) / 2 - MAP_PIN_MAIN_WIDTH / 2) + 'px';
 
         var pinX = mapPinMain.offsetLeft - shift.x;
         var pinY = mapPinMain.offsetTop - shift.y;
