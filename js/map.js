@@ -7,6 +7,7 @@
   var fieldsetList = document.querySelectorAll('fieldset');
   var userForm = document.querySelector('.ad-form');
   var mapPinMain = document.querySelector('.map__pin--main');
+  var filters = document.querySelector('.map__filters');
 
   siteMap.classList.add('map--faded');
   userForm.classList.add('ad-form--disabled');
@@ -20,6 +21,20 @@
   for (var i = 0; i < fieldsetList.length; i++) {
     fieldsetList[i].setAttribute('disabled', 'disabled');
   }
+
+  var resetForms = function () {
+    // Находим и удаляет аватарку и фотографию пользователя.
+    userForm.querySelector('.ad-form-header__preview img').src = 'img/muffin-grey.svg';
+    userForm.querySelector('.ad-form__photo').innerHTML = '';
+
+    // Сбрасываем все фильтры в исходное состояние в том числе и основной маркер.
+    filters.reset();
+    userForm.reset();
+    closeCardAll();
+    mapPinMain.style.left = window.pin.mapPinMainStartX;
+    mapPinMain.style.top = window.pin.mapPinMainStartY;
+    window.pin.newPosition();
+  };
 
   var enableSite = function () {
     siteMap.classList.remove('map--faded');
@@ -38,27 +53,19 @@
   var disableSite = function () {
     siteMap.classList.add('map--faded');
     userForm.classList.add('ad-form--disabled');
-    mapPinMain.style.left = window.pin.mapPinMainStartX;
-    mapPinMain.style.top = window.pin.mapPinMainStartY;
-    closeCardAll();
     clearPins();
-    userForm.reset();
-    window.pin.newPosition();
+    resetForms();
 
     for (i = 0; i < fieldsetList.length; i++) {
       fieldsetList[i].setAttribute('disabled', 'disabled');
     }
-
-    closeCardAll();
   };
 
   var resetButton = userForm.querySelector('.ad-form__reset');
   var onResetClick = function (evt) {
     evt.preventDefault();
-    userForm.reset();
-    mapPinMain.style.left = window.pin.mapPinMainStartX;
-    mapPinMain.style.top = window.pin.mapPinMainStartY;
-    window.pin.newPosition();
+    resetForms();
+    window.render.render();
   };
 
   resetButton.addEventListener('click', onResetClick);
