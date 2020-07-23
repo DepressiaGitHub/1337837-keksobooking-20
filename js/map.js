@@ -4,48 +4,64 @@
 
   var siteMap = document.querySelector('.map');
   var pinElement = document.querySelector('.map__pins');
-
-  var clearPins = function () {
-    var allPins = pinElement.querySelectorAll('.map__pin:not(.map__pin--main)');
-    for (var i = 0; i < allPins.length; i++) {
-      allPins[i].classList.add('hidden');
-    }
-  };
-
   var fieldsetList = document.querySelectorAll('fieldset');
   var userForm = document.querySelector('.ad-form');
   var mapPinMain = document.querySelector('.map__pin--main');
+  var filters = document.querySelector('.map__filters');
 
   siteMap.classList.add('map--faded');
   userForm.classList.add('ad-form--disabled');
 
-  for (var i = 0; i < fieldsetList.length; i++) {
-    fieldsetList[i].setAttribute('disabled', 'disabled');
-  }
+  var clearPins = function () {
+    pinElement.querySelectorAll('.map__pin:not(.map__pin--main)').forEach(function (el) {
+      el.classList.add('hidden');
+    });
+  };
+
+  fieldsetList.forEach(function (el) {
+    el.setAttribute('disabled', 'disabled');
+  });
 
   var enableSite = function () {
     siteMap.classList.remove('map--faded');
     userForm.classList.remove('ad-form--disabled');
     pinElement = document.querySelector('.map__pins');
 
-    for (i = 0; i < fieldsetList.length; i++) {
-      fieldsetList[i].removeAttribute('disabled');
-    }
-
-    var filters = document.querySelector('.map__filters');
-    var houseType = filters.querySelector('#housing-type');
-    window.render.updateOffer(houseType.value);
+    fieldsetList.forEach(function (el) {
+      el.removeAttribute('disabled');
+    });
 
     window.pin.newPosition();
+    window.offer.render();
+    window.offer.startFilters();
+  };
+
+  var disableSite = function () {
+    siteMap.classList.add('map--faded');
+    userForm.classList.add('ad-form--disabled');
+
+    // Находим и удаляет аватарку и фотографию пользователя.
+    userForm.querySelector('.ad-form-header__preview img').src = 'img/muffin-grey.svg';
+    userForm.querySelector('.ad-form__photo').innerHTML = '';
+
+    // Сбрасываем все фильтры в исходное состояние в том числе и основной маркер.
+    clearPins();
+    filters.reset();
+    userForm.reset();
+    closeCardAll();
+    mapPinMain.style.left = window.pin.mapPinMainStartX;
+    mapPinMain.style.top = window.pin.mapPinMainStartY;
+    window.pin.newPosition();
+
+    fieldsetList.forEach(function (el) {
+      el.setAttribute('disabled', 'disabled');
+    });
   };
 
   var resetButton = userForm.querySelector('.ad-form__reset');
   var onResetClick = function (evt) {
     evt.preventDefault();
-    userForm.reset();
-    mapPinMain.style.left = window.pin.mapPinMainStartX;
-    mapPinMain.style.top = window.pin.mapPinMainStartY;
-    window.pin.newPosition();
+    disableSite();
   };
 
   resetButton.addEventListener('click', onResetClick);
@@ -60,28 +76,11 @@
   };
 
   var closeCardAll = function () {
-    for (i = 0; i < openedCard.length; i++) {
-      openedCard[i].classList.add('hidden');
-    }
+    openedCard.forEach(function (el) {
+      el.classList.add('hidden');
+    });
 
     document.removeEventListener('keydown', closeCardsOnEsc);
-  };
-
-  var disableSite = function () {
-    siteMap.classList.add('map--faded');
-    userForm.classList.add('ad-form--disabled');
-    mapPinMain.style.left = window.pin.mapPinMainStartX;
-    mapPinMain.style.top = window.pin.mapPinMainStartY;
-    closeCardAll();
-    clearPins();
-    userForm.reset();
-    window.pin.newPosition();
-
-    for (i = 0; i < fieldsetList.length; i++) {
-      fieldsetList[i].setAttribute('disabled', 'disabled');
-    }
-
-    closeCardAll();
   };
 
   var startMap = function () {
@@ -103,7 +102,7 @@
       });
     };
 
-    for (i = 0; i < buttonOpenCard.length; i++) {
+    for (var i = 0; i < buttonOpenCard.length; i++) {
       addPinClickOpen(buttonOpenCard[i], openedCard[i]);
     }
 
@@ -114,9 +113,9 @@
       });
     };
 
-    for (i = 0; i < buttonCloseCard.length; i++) {
-      addPinClickClose(buttonCloseCard[i]);
-    }
+    buttonCloseCard.forEach(function (el) {
+      addPinClickClose(el);
+    });
   };
 
   window.map = {

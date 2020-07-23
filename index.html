@@ -40,11 +40,11 @@
         <form action="#" class="map__filters" autocomplete="off">
           <fieldset>
             <select name="housing-type" id="housing-type" class="map__filter">
-              <option value="any">Любой тип жилья</option>
+              <option value="any" selected>Любой тип жилья</option>
               <option value="palace">Дворец</option>
               <option value="flat">Квартира</option>
               <option value="house">Дом</option>
-              <option value="bungalo" selected>Бунгало</option>
+              <option value="bungalo">Бунгало</option>
             </select>
             <select name="housing-price" id="housing-price" class="map__filter">
               <option value="any" selected>Любая</option>
@@ -267,10 +267,13 @@
   </template>
   <script src="js/util.js"></script>
   <script src="js/backend.js"></script>
-  <script src="js/homeFilter.js"></script>
   <script src="js/pin.js"></script>
   <script src="js/card.js"></script>
-  <script src="js/render.js"></script>
+  <script src="js/homeFilter.js"></script>
+  <script src="js/offer.js"></script>
+  <script src="js/debounce.js"></script>
+  <script src="js/avatar.js"></script>
+  <script src="js/userPhoto.js"></script>
   <script src="js/map.js"></script>
   <script src="js/form.js"></script>
 </body>

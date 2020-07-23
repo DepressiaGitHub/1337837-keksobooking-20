@@ -13,6 +13,14 @@
   var userPriceInput = document.querySelector('#price');
   var userTypeOption = document.querySelector('#type');
 
+  var showErrorAlert = function (name) {
+    name.setAttribute('style', 'border-color: red; background-color: pink; border-width: 2px');
+  };
+
+  var closeErrorAlert = function (name) {
+    name.removeAttribute('style');
+  };
+
   userTitleInput.addEventListener('invalid', function () {
     if (userTitleInput.validity.tooShort) {
       userTitleInput.setCustomValidity('Заголовок должен состоять минимум из 30 символов.');
@@ -20,6 +28,7 @@
       userTitleInput.setCustomValidity('Заголовок должен состоять максимум из 100 символов.');
     } else if (userTitleInput.validity.valueMissing) {
       userTitleInput.setCustomValidity('Обязательное поле');
+      showErrorAlert(userTitleInput);
     } else {
       userTitleInput.setCustomValidity('');
     }
@@ -30,10 +39,13 @@
 
     if (valueLength < TITLE_MIN_LENGTH) {
       userTitleInput.setCustomValidity('Ещё ' + (TITLE_MIN_LENGTH - valueLength) + ' символов.');
+      showErrorAlert(userTitleInput);
     } else if (valueLength > TITLE_MAX_LENGTH) {
       userTitleInput.setCustomValidity('Удалите лишние ' + (valueLength - TITLE_MAX_LENGTH) + ' символов.');
+      showErrorAlert(userTitleInput);
     } else {
       userTitleInput.setCustomValidity('');
+      closeErrorAlert(userTitleInput);
     }
   });
 
@@ -60,13 +72,23 @@
     }
   });
 
+  userPriceInput.addEventListener('invalid', function () {
+    if (userPriceInput.validity.valueMissing) {
+      userPriceInput.setCustomValidity('Обязательное поле');
+      showErrorAlert(userPriceInput);
+    }
+  });
+
   userPriceInput.addEventListener('input', function () {
     if (userPriceInput.value < PRICE_MIN) {
       userPriceInput.setCustomValidity('Давай дороже!');
+      showErrorAlert(userPriceInput);
     } else if (userPriceInput.value > PRICE_MAX) {
       userPriceInput.setCustomValidity('Ну это слишком дорого!');
+      showErrorAlert(userPriceInput);
     } else {
       userPriceInput.setCustomValidity('');
+      closeErrorAlert(userPriceInput);
     }
   });
 
@@ -97,12 +119,12 @@
     var userGuestValues = userRoomsValues[userRoomValue];
     var isSelected = false;
 
-    for (var j = 0; j < userGuestsList.length; j++) {
-      userGuestsList[j].removeAttribute('selected');
-    }
+    userGuestsList.forEach(function (el) {
+      el.removeAttribute('selected');
+    });
 
-    for (j = 0; j < userGuestsList.length; j++) {
-      var option = userGuestsList[j];
+    for (var i = 0; i < userGuestsList.length; i++) {
+      var option = userGuestsList[i];
 
       if (userGuestValues.includes(option.value)) {
         option.removeAttribute('disabled');
@@ -141,14 +163,14 @@
 
     var popup = main.querySelector('.success');
     var onPopupEscPress = function (evt) {
-      if (evt.keyCode === 27) {
+      if (evt.keyCode === window.util.KEY_CODE.ESC) {
         evt.preventDefault();
         removePopup();
       }
     };
 
     var onPopupMouseDown = function (evt) {
-      if (evt.button === 0) {
+      if (evt.button === window.util.KEY_CODE.LEFT_MOUSE) {
         evt.preventDefault();
         removePopup();
       }
@@ -178,14 +200,14 @@
     var popup = main.querySelector('.error');
     var closePopup = main.querySelector('.error__button');
     var onPopupEscPress = function (evt) {
-      if (evt.keyCode === 27) {
+      if (evt.keyCode === window.util.KEY_CODE.ESC) {
         evt.preventDefault();
         removePopup();
       }
     };
 
     var onPopupMouseDown = function (evt) {
-      if (evt.button === 0) {
+      if (evt.button === window.util.KEY_CODE.LEFT_MOUSE) {
         evt.preventDefault();
         removePopup();
       }
