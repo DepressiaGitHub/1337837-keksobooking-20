@@ -13,6 +13,14 @@
   var userPriceInput = document.querySelector('#price');
   var userTypeOption = document.querySelector('#type');
 
+  var showErrorAlert = function (name) {
+    name.setAttribute('style', 'border-color: red; background-color: pink; border-width: 2px');
+  };
+
+  var closeErrorAlert = function (name) {
+    name.removeAttribute('style');
+  };
+
   userTitleInput.addEventListener('invalid', function () {
     if (userTitleInput.validity.tooShort) {
       userTitleInput.setCustomValidity('Заголовок должен состоять минимум из 30 символов.');
@@ -30,10 +38,13 @@
 
     if (valueLength < TITLE_MIN_LENGTH) {
       userTitleInput.setCustomValidity('Ещё ' + (TITLE_MIN_LENGTH - valueLength) + ' символов.');
+      showErrorAlert(userTitleInput);
     } else if (valueLength > TITLE_MAX_LENGTH) {
       userTitleInput.setCustomValidity('Удалите лишние ' + (valueLength - TITLE_MAX_LENGTH) + ' символов.');
+      showErrorAlert(userTitleInput);
     } else {
       userTitleInput.setCustomValidity('');
+      closeErrorAlert(userTitleInput);
     }
   });
 
@@ -63,10 +74,13 @@
   userPriceInput.addEventListener('input', function () {
     if (userPriceInput.value < PRICE_MIN) {
       userPriceInput.setCustomValidity('Давай дороже!');
+      showErrorAlert(userPriceInput);
     } else if (userPriceInput.value > PRICE_MAX) {
       userPriceInput.setCustomValidity('Ну это слишком дорого!');
+      showErrorAlert(userPriceInput);
     } else {
       userPriceInput.setCustomValidity('');
+      closeErrorAlert(userPriceInput);
     }
   });
 
