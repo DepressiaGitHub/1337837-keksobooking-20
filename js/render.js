@@ -40,7 +40,7 @@
   var setOnChangeListener = function () {
     filters.addEventListener('change', function () {
       // debounce не работает, хз почему.
-      window.debounce(render(window.homeFilter.updateOffer()));
+      render(window.homeFilter.updateOffer());
       window.map.startMap();
     });
   };
