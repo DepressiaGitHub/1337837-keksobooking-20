@@ -31,8 +31,8 @@
     }
 
     window.pin.newPosition();
-    window.render.render(window.homeFilter.updateOffer());
-    window.render.startFilters(window.homeFilter.updateOffer());
+    window.render.render();
+    window.render.startFilters();
   };
 
   var disableSite = function () {

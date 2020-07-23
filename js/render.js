@@ -15,7 +15,7 @@
     });
   };
 
-  var render = function (data) {
+  var render = function () {
     var fragment = document.createDocumentFragment();
     var fragmentCard = document.createDocumentFragment();
     var siteMap = document.querySelector('.map');
@@ -24,6 +24,7 @@
 
     removePins();
     removeCards();
+    var data = window.homeFilter.updateOffer();
 
     var takeNumber = data.length > MAX_PIN_COUNT ? MAX_PIN_COUNT : data.length;
     for (var i = 0; i < takeNumber; i++) {
@@ -38,11 +39,12 @@
   var filters = document.querySelector('.map__filters');
 
   var setOnChangeListener = function () {
-    filters.addEventListener('change', function () {
-      // debounce не работает, хз почему.
-      render(window.homeFilter.updateOffer());
+    var onFilterChange = function () {
+      render();
       window.map.startMap();
-    });
+    };
+
+    filters.addEventListener('change', window.debounce(onFilterChange));
   };
 
   window.render = {
