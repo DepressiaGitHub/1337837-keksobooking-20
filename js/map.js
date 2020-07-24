@@ -69,15 +69,22 @@
   var openedCard;
 
   var closeCardsOnEsc = function (evt) {
-    if (evt.key === 'Escape') {
+    if (evt.keyCode === window.util.KEY_CODE.ESC) {
       evt.preventDefault();
       closeCardAll();
     }
   };
 
+  var removeActiveMapPin = function () {
+    pinElement.querySelectorAll('.map__pin--active').forEach(function (el) {
+      el.classList.remove('map__pin--active');
+    });
+  };
+
   var closeCardAll = function () {
     openedCard.forEach(function (el) {
       el.classList.add('hidden');
+      removeActiveMapPin();
     });
 
     document.removeEventListener('keydown', closeCardsOnEsc);
@@ -99,6 +106,7 @@
       button.addEventListener('click', function (evt) {
         evt.preventDefault();
         showCard(card);
+        button.classList.add('map__pin--active');
       });
     };
 

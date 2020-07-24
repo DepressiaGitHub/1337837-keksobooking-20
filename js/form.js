@@ -114,7 +114,7 @@
     '100': ['0']
   };
 
-  var availableRooms = function () {
+  var setAvailableRooms = function () {
     var userRoomValue = userRooms.value;
     var userGuestValues = userRoomsValues[userRoomValue];
     var isSelected = false;
@@ -138,8 +138,8 @@
     }
   };
 
-  availableRooms();
-  userRooms.addEventListener('change', availableRooms);
+  setAvailableRooms();
+  userRooms.addEventListener('change', setAvailableRooms);
   var main = document.querySelector('main');
 
   // Находим форму.
