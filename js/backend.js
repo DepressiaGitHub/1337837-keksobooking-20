@@ -45,18 +45,8 @@
     xhr.send(data);
   };
 
-  var data = function () {
-    var xhr = new XMLHttpRequest();
-    xhr.addEventListener('load', function () {});
-    xhr.open('GET', URL_GET);
-    xhr.send();
-
-    return xhr.responseText;
-  };
-
   window.backend = {
     load: load,
-    save: save,
-    data: data
+    save: save
   };
 })();

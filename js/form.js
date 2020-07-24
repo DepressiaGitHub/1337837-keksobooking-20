@@ -223,10 +223,10 @@
     closePopup.addEventListener('click', onPopupButtonClick);
   };
 
-  var submitOffer = function (evt) {
+  var submitOfferHandler = function (evt) {
     window.backend.save(new FormData(form), successForm, errorForm);
     evt.preventDefault();
   };
 
-  form.addEventListener('submit', submitOffer);
+  form.addEventListener('submit', submitOfferHandler);
 })();
